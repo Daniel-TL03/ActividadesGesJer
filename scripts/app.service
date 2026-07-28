@@ -1,0 +1,15 @@
+[Unit]
+Description=Gunicorn - Gestor de Actividades (Flask + MySQL)
+After=network.target mysql.service
+
+[Service]
+User=deploy
+Group=www-data
+WorkingDirectory=/var/www/gestor-actividades
+Environment="PATH=/var/www/gestor-actividades/venv/bin"
+EnvironmentFile=/var/www/gestor-actividades/.env
+ExecStart=/var/www/gestor-actividades/venv/bin/gunicorn --workers 3 --bind 127.0.0.1:5000 app:app
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
